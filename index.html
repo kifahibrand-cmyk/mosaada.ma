@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>الموسوعة الكبرى للأوسبيلدونغ والهجرة الألمانية | 2026</title>
     <style>
+        /* 🎨 المتغيرات اللونية للمظهرين الداكن والفاتح 🎨 */
         :root {
             --bg-gradient: linear-gradient(135deg, #060a12 0%, #0d0c1d 50%, #1a0724 100%);
             --glass-bg: rgba(255, 255, 255, 0.02);
@@ -18,13 +19,24 @@
             --accent-orange: #fb923c;
             --accent-purple: #a855f7;
             --accent-yellow: #facc15;
+            --card-hover-bg: rgba(255, 255, 255, 0.04);
+        }
+
+        [data-theme="light"] {
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 50%, #cbd5e1 100%);
+            --glass-bg: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(0, 0, 0, 0.06);
+            --glass-highlight: rgba(0, 0, 0, 0.03);
+            --text-primary: #0f172a;
+            --text-secondary: #475569;
+            --card-hover-bg: rgba(0, 0, 0, 0.02);
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+            transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
             -webkit-tap-highlight-color: transparent;
         }
 
@@ -42,7 +54,7 @@
         header {
             text-align: center;
             max-width: 800px;
-            margin: 1rem auto 2.5rem auto;
+            margin: 1rem auto 2rem auto;
             padding: 0 0.5rem;
         }
 
@@ -63,7 +75,45 @@
             line-height: 1.6;
         }
 
-        /* 📱 الهيكل الذكي: ترتيب عمودي افتراضي للهواتف لمنع صغر الحجم 📱 */
+        /* 🔍 شريط البحث 🔍 */
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 2.5rem auto;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .search-box {
+            width: 100%;
+            padding: 1.1rem 3rem 1.1rem 1.5rem;
+            font-size: 1.1rem;
+            font-family: inherit;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 50px;
+            color: var(--text-primary);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            outline: none;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        .search-box:focus {
+            border-color: var(--accent-cyan);
+            box-shadow: 0 0 20px rgba(56, 189, 248, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            right: 2.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+            pointer-events: none;
+        }
+
+        /* 📱 الهيكل الذكي 📱 */
         .bento-grid {
             width: 100%;
             max-width: 1300px;
@@ -83,6 +133,10 @@
             width: 100%;
             display: flex;
             flex-direction: column;
+        }
+
+        .bento-card.hidden, .modern-link.hidden, .glossary-item.hidden {
+            display: none !important;
         }
 
         .bento-card h2 {
@@ -105,7 +159,7 @@
             align-items: center;
             justify-content: space-between;
             background: rgba(255, 255, 255, 0.01);
-            border: 1px solid rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
             padding: 1.1rem;
             border-radius: 16px;
             color: var(--text-primary);
@@ -114,7 +168,7 @@
         }
 
         .modern-link:active {
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--card-hover-bg);
             transform: scale(0.99);
         }
 
@@ -123,6 +177,7 @@
             flex-direction: column;
             gap: 0.25rem;
             padding-left: 0.5rem;
+            width: 80%;
         }
 
         .link-title {
@@ -134,6 +189,33 @@
             font-size: 0.85rem;
             color: var(--text-secondary);
             line-height: 1.5;
+        }
+
+        /* 📋 أزرار التحكم والنسخ 📋 */
+        .actions-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            width: 35px;
+            height: 35px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 0.9rem;
+            z-index: 10;
+        }
+
+        .copy-btn:hover {
+            color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.1);
         }
 
         .arrow-icon {
@@ -154,6 +236,99 @@
             width: fit-content;
         }
 
+        /* 📖 قسم قاموس المصطلحات المضاف حديثاً 📖 */
+        .glossary-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .glossary-item {
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .glossary-header {
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.01);
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            font-size: 1rem;
+        }
+
+        .glossary-header::after {
+            content: '▾';
+            color: var(--text-secondary);
+            transition: transform 0.2s;
+        }
+
+        .glossary-item.open .glossary-header::after {
+            transform: rotate(180deg);
+            color: var(--accent-orange);
+        }
+
+        .glossary-content {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.05);
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .glossary-item.open .glossary-content {
+            padding: 1rem;
+            max-height: 200px;
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* 🌓 زر تغيير المظهر العائم 🌓 */
+        .theme-toggle-btn {
+            position: fixed;
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 55px;
+            height: 55px;
+            border-radius: 50px;
+            background: var(--text-primary);
+            color: var(--bg-gradient);
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            z-index: 1000;
+        }
+
+        /* 🔔 إشعار منبثق عند نسخ الرابط 🔔 */
+        .toast-notification {
+            position: fixed;
+            top: 1.5rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            background: #22c55e;
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            font-weight: 600;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 2000;
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+        }
+
+        .toast-notification.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
         /* حواف التلوين العلوية */
         .card-1 { border-top: 4px solid var(--accent-cyan); }
         .card-2 { border-top: 4px solid var(--accent-green); }
@@ -163,6 +338,7 @@
         .card-6 { border-top: 4px solid var(--accent-yellow); }
         .card-7 { border-top: 4px solid #10b981; }
         .card-8 { border-top: 4px solid #6366f1; }
+        .card-9 { border-top: 4px solid #f43f5e; }
 
         footer {
             text-align: center;
@@ -173,49 +349,44 @@
             padding-top: 1.5rem;
         }
 
-        /* 🖥️ التبديل الذكي لشاشات التابلت والكمبيوتر لمنح مظهر الـ Bento الفاخر 🖥️ */
+        /* 🖥️ شاشات التابلت والكمبيوتر 🖥️ */
         @media (min-width: 768px) {
             body { padding: 2rem; }
             header h1 { font-size: 2.8rem; }
-            
-            .bento-grid {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-            }
+            .bento-grid { display: grid; grid-template-columns: repeat(2, 1fr); }
+            .toast-notification { left: auto; right: 2rem; transform: translateX(0) translateY(-100px); }
+            .toast-notification.show { transform: translateX(0) translateY(0); }
         }
 
         @media (min-width: 1200px) {
-            .bento-grid {
-                grid-template-columns: repeat(3, 1fr);
-            }
-            .span-2 { 
-                grid-column: span 2; 
-            }
-            .bento-card:hover {
-                transform: translateY(-4px);
-                border-color: var(--glass-highlight);
-                box-shadow: 0 20px 40px rgba(0,0,0,0.5);
-            }
-            .modern-link:hover {
-                background: rgba(255, 255, 255, 0.04);
-                padding-right: 1.4rem;
-                border-color: rgba(255, 255, 255, 0.07);
-            }
-            .modern-link:hover .arrow-icon {
-                color: var(--accent-cyan);
-                transform: translateX(-4px);
-            }
+            .bento-grid { grid-template-columns: repeat(3, 1fr); }
+            .span-2 { grid-column: span 2; }
+            .bento-card:hover { transform: translateY(-4px); border-color: var(--glass-highlight); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+            .modern-link:hover { background: var(--card-hover-bg); padding-right: 1.4rem; }
+            .modern-link:hover .arrow-icon { color: var(--accent-cyan); transform: translateX(-4px); }
         }
     </style>
 </head>
 <body>
+
+    <!-- 🔔 إشعار التنبيه اللحظي عند النسخ -->
+    <div id="toast" class="toast-notification">تم نسخ الرابط بنجاح! 📋</div>
+
+    <!-- 🌓 زر تبديل المظهر العائم -->
+    <button class="theme-toggle-btn" id="themeToggle" title="تبديل الوضع الليلي/النهاري">🌓</button>
 
     <header>
         <h1>الموسوعة الرقمية الكبرى للأوسبيلدونغ والهجرة الألمانية</h1>
         <p>المرجع الأضخم على الويب المليء بكافة الروابط الرسمية، محركات البحث عن العقود، منصات التعديل، وأدوات الاستقرار واللغة والسكن</p>
     </header>
 
-    <div class="bento-grid">
+    <!-- 🔍 شريط البحث الفوري -->
+    <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" id="liveSearch" class="search-box" placeholder="ابحث عن: سكن، تمريض، تعديل شهادات، لغة، او اسم مصطلح...">
+    </div>
+
+    <div class="bento-grid" id="mainGrid">
         
         <!-- القسم 1 -->
         <div class="bento-card span-2 card-1">
@@ -226,42 +397,40 @@
                         <span class="link-title">Ausbildung.de</span>
                         <span class="link-desc">المنصة الذهبية الأولى لاستكشاف مجالات التدريب المهني في مختلف الولايات.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.ausbildung.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.arbeitsagentur.de" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Jobboerse Arbeitsagentur</span>
                         <span class="link-desc">الموقع الحكومي الرسمي التابع لوكالة العمل الفيدرالية لطرح شواغر التدريب الموثوقة.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.arbeitsagentur.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.azubiyo.de" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Azubiyo Portal</span>
                         <span class="link-desc">محرك بحث مجهز باختبارات تحليل الشخصية لتوجيهك نحو المهنة المناسبة لك.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.azubiyo.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://de.indeed.com" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Indeed Germany</span>
                         <span class="link-desc">أكبر منصة وظائف تتيح تصفية مئات عقود الأوسبيلدونغ يومياً والتقديم المباشر بملفك.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.stepstone.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">StepStone Ausbildung</span>
-                        <span class="link-desc">تركز على تقديم فرص التدريب المهني في الشركات الكبرى والمؤسسات ذات الأجور العالية.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://de.indeed.com" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.lehrstellen-radar.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Lehrstellen Radar</span>
-                        <span class="link-desc">رادار مخصص للبحث عن شواغر التدريب المهني الحرفي واليدوي في أطراف المدن الألمانية.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
@@ -273,37 +442,32 @@
                 <a href="https://www.anerkennung-in-deutschland.de" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Anerkennung in Deutschland</span>
-                        <span class="link-desc">البوابة الاتحادية الأولى لتوجيهك إلكترونياً للهيئة المسؤولة عن تعديل مؤهلك الدراسي.</span>
+                        <span class="link-desc">البوابة الاتحادية الأولى لتوجيهك إلكترونياً للهيئة المسؤنة عن تعديل مؤهلك الدراسي.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.anerkennung-in-deutschland.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://anabin.kmk.org" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Anabin KMK Database</span>
                         <span class="link-desc">قاعدة البيانات الرسمية للتأكد من تصنيف واعتراف ألمانيا بالمدارس والجامعات في بلدك.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://anabin.kmk.org" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.kmk.org/zab" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">ZAB Central Office</span>
                         <span class="link-desc">المكتب المركزي لإصدار وثائق تقييم واعتراف الشهادات العليا والجامعية في ألمانيا.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.uni-assist.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Uni-Assist Portal</span>
-                        <span class="link-desc">المنصة المسؤولة عن فحص وتعديل أوراق المتقدمين للأوسبيلدونغ المدرسي الطبي والعالي.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.kmk.org/zab" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.bq-portal.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">BQ-Portal لتقييم المؤهلات</span>
-                        <span class="link-desc">بوابة رسمية متخصصة في مقارنة ومعادلة الحرف والخبرات المهنية والعملية غير الأكاديمية.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
@@ -317,35 +481,20 @@
                         <span class="link-title">Europass CV Creator</span>
                         <span class="link-desc">المنصة الأوروبية الموحدة لبناء سيرة ذاتية رسمية مطابقة للمواصفات المطلوبة قانونياً.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://europa.eu/europass/ar" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.canva.com" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Canva Lebenslauf Designs</span>
                         <span class="link-desc">آلاف التصاميم الأنيقة والحديثة للسيرة الذاتية لجذب انتباه مسؤولي الموارد البشرية بالشركات.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.lebenslauf.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Lebenslauf.de الموجه</span>
-                        <span class="link-desc">موقع ألماني شهير يقودك خطوة بخطوة لصياغة خطاب التغطية والـ CV بلغة سليمة.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.canva.com" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.xing.com" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">XING Professional Network</span>
-                        <span class="link-desc">الشبكة المهنية الأولى بالداخل الألماني لإنشاء بروفايل يتيح للشركات العثور عليك مباشرة.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.jobscan.co" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Jobscan ATS Optimizer</span>
-                        <span class="link-desc">أداة ذكية لمقارنة الـ CV مع شروط العقد لضمان تخطي الفحص الذكي للذكاء الاصطناعي.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
@@ -360,15 +509,10 @@
                         <span class="link-title">Make it in Germany (News)</span>
                         <span class="link-desc">المرجع الموثوق رقم واحد لمتابعة تعديلات "بطاقة الفرصة" وقوانين تسهيل هجرة الكفاءات المهنية.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.dw.com/ar/%D8%A3%D9%84%D9%85%D8%A7%D9%86%D9%8A%D8%A3/s-11942" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="news-badge">وكالة الأنباء الرسمية</span>
-                        <span class="link-title">دويتشه فيله (DW) - الشؤون الألمانية</span>
-                        <span class="link-desc">الصحافة الإخبارية المعتمدة لمتابعة قرارات البرلمان والقرارات الخاصة بالإقامات والجنسية أولاً بأول.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.make-it-in-germany.com" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
                 </a>
                 <a href="https://www.infomigrants.net/ar/" target="_blank" class="modern-link">
                     <div class="link-info">
@@ -376,23 +520,10 @@
                         <span class="link-title">موقع بوابة InfoMigrants الدولية</span>
                         <span class="link-desc">رصد شامل وسريع لكافة المتغيرات والقوانين الطارئة في مسارات الهجرة والعمل داخل أوروبا.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.bmi.bund.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="news-badge">وزارة الداخلية الألمانية</span>
-                        <span class="link-title">Federal Ministry of the Interior (BMI)</span>
-                        <span class="link-desc">المنصة السيادية لمعرفة الشروط والمستندات القانونية الصارمة بخصوص فيزا البحث عن تدريب مهني.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.infomigrants.net/ar/" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.deutschland.de/ar" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="news-badge">بوابة الاقتصاد والمجتمع</span>
-                        <span class="link-title">بوابة Deutschland.de الشاملة</span>
-                        <span class="link-desc">تنشر مقالات دورية وإحصاءات دقيقة حول أكثر المهن والقطاعات عجزاً وحاجة للمهاجرين.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
@@ -406,35 +537,20 @@
                         <span class="link-title">IHK Lehrstellenbörse</span>
                         <span class="link-desc">موقع الغرفة التجارية والصناعية الألمانية المخصص حصرياً لعقود الأوسبيلدونغ التجارية والتقنية.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.ihk-lehrstellenboerse.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.hwk-lehrstellenboerse.de" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">HWK Lehrstellenbörse</span>
                         <span class="link-desc">بورصة الوظائف التابعة لغرفة الصناعات الحرفية واليدوية (Handwerk) في كافة الولايات.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.dihk.de/de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">الموقع العام لاتحاد الـ DIHK</span>
-                        <span class="link-desc">لمعرفة القوانين التنظيمية وهيكلة التعليم المهني المزدوج ومستجدات قطاع الأعمال.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.hwk-lehrstellenboerse.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.bibb.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">معهد BIBB الفيدرالي للتعليم</span>
-                        <span class="link-desc">المعهد الحكومي المسؤول عن تطوير المناهج وتحديد الرواتب القياسية لكل مهنة أوسبيلدونغ.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.pflegeausbildung.net" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Pflegeausbildung Portal</span>
-                        <span class="link-desc">الموقع الحكومي التخصصي الأكبر لدراسة مجالات التمريض والرعاية الصحية الأكثر طلباً.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
@@ -443,40 +559,25 @@
         <div class="bento-card card-6">
             <h2><span>🗣️</span> أدوات فحص وتدقيق وتعلّم اللغة الألمانية</h2>
             <div class="links-container">
-                <a href="https://www.duden.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Duden Rechtschreibung</span>
-                        <span class="link-desc">المرجع الأول لتدقيق القواعد والإملاء الألماني لضمان خلو ملفات تقديمك من الأخطاء.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.goethe.de/ins/eg/ar/spr/kur/onl.html" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Goethe-Institut Online</span>
-                        <span class="link-desc">الموقع الرسمي لمعهد جوته لمعرفة مواعيد الامتحانات الرسمية والمستويات المطلوبة.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
                 <a href="https://www.vhs-lernportal.de" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">vhs-Lernportal</span>
                         <span class="link-desc">البوابة المجانية لمدارس الشعب الألمانية (VHS) لتعلم اللغة الألمانية المخصصة لبيئة العمل.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.vhs-lernportal.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.deepl.com/translator" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">DeepL Translator الاحترافي</span>
                         <span class="link-desc">أدق مترجم ذكاء اصطناعي للغة الألمانية لصياغة الرسائل الإلكترونية الرسمية للشركات.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://anabin.kmk.org" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">فحص المؤهل اللغوي المعتمد</span>
-                        <span class="link-desc">التأكد من شواهد امتحانات الـ (Telc أو Goethe أو ÖSD) المطلوبة لدى السفارات والقنصليات.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.deepl.com/translator" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
@@ -490,86 +591,180 @@
                         <span class="link-title">WG-Gesucht Portal</span>
                         <span class="link-desc">المنصة الأشهر في ألمانيا للبحث عن غرف مشتركة بأسعار رخيصة تناسب راتب الأوسبيلدونغ.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.wg-gesucht.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.immobilienscout24.de" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">ImmoScout24</span>
                         <span class="link-desc">أكبر محرك بحث في ألمانيا عن الشقق المستقلة والاستوديوهات للبحث المتطور في كل مدينة.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.kleinanzeigen.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Kleinanzeigen</span>
-                        <span class="link-desc">سوق الإعلانات المبوبة الأكبر في ألمانيا للعثور على شقق للإيجار المباشر من الملاك وأثاث رخيص.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.immobilienscout24.de" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.immowelt.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Immowelt Portal</span>
-                        <span class="link-desc">خيار محوري وبديل قوي جداً لمقارنة أسعار العقارات والإيجارات في كافة المدن الألمانية.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.studentenwerke.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Deutsches Studierendenwerk</span>
-                        <span class="link-desc">الموقع الرسمي لإدارة السكن الطلابي الحكومي المدعوم لمعرفة شروط التقديم على غرف رخيصة.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
                 </a>
             </div>
         </div>
 
         <!-- القسم 8 -->
         <div class="bento-card card-8">
-            <h2><span>👥</span> منصات نقاش المهاجرين والجروبات والمجتمعات الحية</h2>
+            <h2><span>👥</span> منصات نقاش المهاجرين والمجتمعات الحية</h2>
             <div class="links-container">
                 <a href="https://www.facebook.com" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">مجموعات فيسبوك: Ausbildung in Germany</span>
-                        <span class="link-desc">جروبات ضخمة يشارك فيها آلاف العرب يومياً تجاربهم مع السفارات الألمانية وأسئلة المقابلات.</span>
+                        <span class="link-desc">جروبات ضخمة يشارك فيها آلاف العرب يومياً تجاربهم مع السفارات الألمانية.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.facebook.com" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
+                    </div>
                 </a>
                 <a href="https://www.reddit.com/r/Germany/" target="_blank" class="modern-link">
                     <div class="link-info">
                         <span class="link-title">Reddit Germany Community</span>
-                        <span class="link-desc">تجمع ضخم للنقاش المفتوح باللغة الإنجليزية حول كل ما يخص الضرائب، السكن، والقوانين.</span>
+                        <span class="link-desc">تجمع ضخم للنقاش المفتوح باللغة الإنجليزية حول كل ما يخص الضرائب والسكن.</span>
                     </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.reddit.com/r/asyl_in_germany/" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">Reddit Ausbildung & Work</span>
-                        <span class="link-desc">مجتمعات مخصصة لتبادل الأسئلة القانونية الصعبة للمغتربين والطلاب الجدد في ألمانيا.</span>
+                    <div class="actions-wrapper">
+                        <button class="copy-btn" data-url="https://www.reddit.com/r/Germany/" title="نسخ الرابط">📋</button>
+                        <span class="arrow-icon">←</span>
                     </div>
-                    <span class="arrow-icon">←</span>
                 </a>
-                <a href="https://www.tatsachen-ueber-deutschland.de/ar" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">منصة حقائق عن ألمانيا الرقمية</span>
-                        <span class="link-desc">دليل حكومي تفاعلي باللغة العربية يشرح نمط الحياة وثقافة العمل وحقوقك كمتدرب أجنبي.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
-                <a href="https://www.handwerk.de" target="_blank" class="modern-link">
-                    <div class="link-info">
-                        <span class="link-title">موقع Handwerk لقصص النجاح</span>
-                        <span class="link-desc">يعرض فيديوهات وتجارب واقعية للشباب المغتربين داخل الورش والمصانع الألمانية لإعطائك الحافز.</span>
-                    </div>
-                    <span class="arrow-icon">←</span>
-                </a>
+            </div>
+        </div>
+
+        <!-- 📖 القسم 9 التفاعلي الجديد: قاموس مصطلحات الهجرة 📖 -->
+        <div class="bento-card span-2 card-9">
+            <h2><span>📖</span> قاموس ودليل مصطلحات الهجرة الألمانية التفاعلي</h2>
+            <div class="glossary-container">
+                
+                <div class="glossary-item">
+                    <div class="glossary-header">Ausbildung (التدريب المهني المزدوج)</div>
+                    <div class="glossary-content">نظام تعليمي ألماني يجمع بين الدراسة النظرية في المدرسة المهنية (Berufsschule) والتدريب العملي التطبيقي داخل شركة أو مصنع، ويتقاضى فيه الطالب راتباً شهرياً طوال فترة التدريب.</div>
+                </div>
+
+                <div class="glossary-item">
+                    <div class="glossary-header">Anerkennung (تعديل الشهادات وإعادة التأهيل)</div>
+                    <div class="glossary-content">العملية القانونية الرسمية لمقارنة وفحص شهادتك المدرسية أو الجامعية الصادرة من خارج ألمانيا لمعادلتها بالنظام التعليمي الألماني لتمكينك من العمل أو التدريب بشكل قانوني.</div>
+                </div>
+
+                <div class="glossary-item">
+                    <div class="glossary-header">Anschreiben (خطاب التغطية والتحفيز)</div>
+                    <div class="glossary-content">رسالة رسمية من صفحة واحدة تُرفق مع السيرة الذاتية (CV)، تشرح فيها للشركة الألمانية دوافعك واهتمامك بالوظيفة أو الأوسبيلدونغ، ولماذا تعتبر أنت المرشح المثالي لهم.</div>
+                </div>
+
+                <div class="glossary-item">
+                    <div class="glossary-header">Defizitbescheid (بيان النقص والاعتراف الجزئي)</div>
+                    <div class="glossary-content">وثيقة رسمية تصدرها هيئة التعديل تخبرك فيها بأن شهادتك معترف بها ولكن هناك نقص في بعض المواد أو الساعات العملية، وتحدد لك تدريباً أو امتحاناً تكميلياً لاستكمال الاعتراف الكامل.</div>
+                </div>
+
             </div>
         </div>
 
     </div>
 
     <footer>
-        <p>© 2026 الموسوعة العالمية الشاملة للأوسبيلدونغ والهجرة. تم التأمين البرمجي ليعمل بتوافق كامل ومضمون.</p>
+        <p>© 2026 المنصة الموحدة الشاملة للهجرة والأوسبيلدونغ. جميع الحقوق مؤمنة برمجياً ومحفوظة.</p>
     </footer>
+
+    <!-- 🧠 الأكواد البرمجية لتشغيل كافة العمليات الحيوية 🧠 -->
+    <script>
+        // 1. نظام محرك البحث الفوري الذكي (تصفية الروابط والمصطلحات معاً)
+        document.getElementById('liveSearch').addEventListener('input', function(e) {
+            let filter = e.target.value.toLowerCase().trim();
+            let cards = document.querySelectorAll('.bento-card');
+
+            cards.forEach(card => {
+                let links = card.querySelectorAll('.modern-link');
+                let glossItems = card.querySelectorAll('.glossary-item');
+                let cardTitle = card.querySelector('h2').textContent.toLowerCase();
+                let hasVisibleContent = false;
+
+                // فحص الروابط
+                links.forEach(link => {
+                    let title = link.querySelector('.link-title').textContent.toLowerCase();
+                    let desc = link.querySelector('.link-desc').textContent.toLowerCase();
+                    if (title.includes(filter) || desc.includes(filter) || cardTitle.includes(filter)) {
+                        link.classList.remove('hidden');
+                        hasVisibleContent = true;
+                    } else {
+                        link.classList.add('hidden');
+                    }
+                });
+
+                // فحص القاموس
+                glossItems.forEach(item => {
+                    let gHeader = item.querySelector('.glossary-header').textContent.toLowerCase();
+                    let gContent = item.querySelector('.glossary-content').textContent.toLowerCase();
+                    if (gHeader.includes(filter) || gContent.includes(filter) || cardTitle.includes(filter)) {
+                        item.classList.remove('hidden');
+                        hasVisibleContent = true;
+                    } else {
+                        item.classList.add('hidden');
+                    }
+                });
+
+                if (hasVisibleContent || filter === '') {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+        });
+
+        // 2. نظام التبديل الذكي بين الوضع الليلي والنهاري (وتذكره)
+        const themeToggleBtn = document.getElementById('themeToggle');
+        const currentTheme = localStorage.getItem('theme') || 'dark';
+        
+        document.documentElement.setAttribute('data-theme', currentTheme);
+        themeToggleBtn.textContent = currentTheme === 'light' ? '🌙' : '☀️';
+
+        themeToggleBtn.addEventListener('click', () => {
+            let theme = document.documentElement.getAttribute('data-theme');
+            if (theme === 'dark') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                localStorage.setItem('theme', 'light');
+                themeToggleBtn.textContent = '🌙';
+            } else {
+                document.documentElement.setAttribute('data-theme', 'dark');
+                localStorage.setItem('theme', 'dark');
+                themeToggleBtn.textContent = '☀️';
+            }
+        });
+
+        // 3. نظام الأكورديون التفاعلي لفتح وإغلاق المصطلحات
+        document.querySelectorAll('.glossary-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const item = header.parentElement;
+                item.classList.toggle('open');
+            });
+        });
+
+        // 4. نظام نسخ الروابط السريع مع الإشعار اللحظي الذكي
+        document.querySelectorAll('.copy-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault(); // منع فتح الرابط عند الضغط على زر النسخ
+                e.stopPropagation(); // منع انتقال الحدث للرابط الأب
+                
+                let url = this.getAttribute('data-url');
+                
+                navigator.clipboard.writeText(url).then(() => {
+                    const toast = document.getElementById('toast');
+                    toast.classList.add('show');
+                    
+                    // إخفاء الإشعار بعد ثانيتين تلقائياً
+                    setTimeout(() => {
+                        toast.classList.remove('show');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('فشل النسخ: ', err);
+                });
+            });
+        });
+    </script>
 
 </body>
 </html>
