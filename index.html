@@ -796,13 +796,31 @@
         </p>
     </div>
 </footer>
-  <!-- بداية كود عداد الزوار النهائي والمحمي 100% -->
-<div style="text-align: center; margin: 10px 0; font-family: sans-serif; color: #888; font-size: 11px; user-select: none; -webkit-user-select: none;">
+<!-- بداية كود عداد الزوار الذكي - يمنع حساب صاحب الموقع -->
+<div id="counter-wrapper" style="text-align: center; margin: 10px 0; font-family: sans-serif; color: #888; font-size: 11px; user-select: none; -webkit-user-select: none; display: none;">
     <span style="vertical-align: middle; margin-right: 5px;">الزوار:</span>
-    <div style="vertical-align: middle; display: inline-block; transform: scale(0.75); transform-origin: left center; pointer-events: none; -webkit-tap-highlight-color: transparent;">
-        <img src="https://counter2.stat.ovh/private/freecounterstat.php?c=ln9l8dbu5wux7u76q3f53clcl84q3mhy" border="0" title="page counter" alt="page counter" style="display: inline-block; pointer-events: none; -webkit-user-drag: none;">
+    <div style="position: relative; display: inline-block; vertical-align: middle; transform: scale(0.75); transform-origin: left center;">
+        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 9999; cursor: default; pointer-events: auto;"></div>
+        <img id="counter-img" src="" border="0" title="page counter" alt="page counter" style="display: block;">
     </div>
 </div>
-<!-- نهاية كود عداد الزوار النهائي والمحمي 100% -->
+
+<script>
+    // تفعيل الرابط السري: إذا دخلت للموقع عبر إضافة ?admin=true للرابط، فسيتم حظرك من العداد نهائياً
+    if (window.location.search.includes('admin=true')) {
+        localStorage.setItem('is_admin', 'yes');
+    }
+
+    // التحقق هل أنت صاحب الموقع أم زائر طبيعي
+    if (localStorage.getItem('is_admin') !== 'yes') {
+        // إذا كان زائراً طبيعياً: نظهر العداد ونشغل الصورة لتحسبه
+        document.getElementById('counter-img').src = "https://counter2.stat.ovh/private/freecounterstat.php?c=ln9l8dbu5wux7u76q3f53clcl84q3mhy";
+        document.getElementById('counter-wrapper').style.display = "block";
+    } else {
+        // إذا كنت أنت: العداد يختفي تماماً ولا يتم تحميل الصورة وبالتالي لا يتم حسابك!
+        console.log("مرحباً بك يا أدمن! تم إيقاف العداد من أجلك مجاناً.");
+    }
+</script>
+<!-- نهاية كود عداد الزوار الذكي -->
 </body>
 </html>
